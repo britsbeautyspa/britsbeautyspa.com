@@ -44,6 +44,15 @@
   .nav-links button:hover { color:var(--pink); }
   .nav-links button.active { color:var(--pink); border-bottom-color:var(--pink); }
   .nav-right { display:flex; align-items:center; gap:14px; }
+  @media(max-width:900px) {
+    .hamburger { display:flex !important; }
+    .nav-links { display:none !important; }
+    .women-banner { top:64px; height:28px; }
+    .women-banner-text { font-size:0.52rem; }
+    .women-banner-dot { display:none; }
+    .page-wrapper { top:92px !important; }
+    .mobile-menu { top:92px; }
+  }
   .nav-social { display:flex; align-items:center; gap:10px; }
   .nav-social a { color:var(--muted); transition:color 0.3s; display:flex; align-items:center; }
   .nav-social a:hover { color:var(--pink); }
@@ -54,9 +63,9 @@
   .women-banner {
     position:fixed; top:70px; width:100%; z-index:99;
     background:linear-gradient(135deg,var(--pink-dark) 0%,var(--pink) 50%,var(--pink-dark) 100%);
-    padding:8px 48px;
-    display:flex; align-items:center; justify-content:center; gap:16px; flex-wrap:wrap;
-    height:36px;
+    padding:6px 20px;
+    display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:nowrap;
+    height:32px; overflow:hidden;
   }
   .women-banner-text { font-size:0.62rem; letter-spacing:0.28em; text-transform:uppercase; color:#fff; font-weight:500; }
   .women-banner-dot { width:4px; height:4px; background:rgba(255,255,255,0.5); border-radius:50%; }
@@ -285,6 +294,57 @@
     .contact-info{grid-template-columns:1fr 1fr;}
     .contact-page{padding:40px 18px;}
   }
+
+  /* HAMBURGER MENU */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+  }
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--pink);
+    transition: all 0.3s;
+  }
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 102px;
+    left: 0;
+    right: 0;
+    background: rgba(30,26,31,0.98);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    z-index: 98;
+    padding: 16px 0;
+  }
+  .mobile-menu.open { display: block; }
+  .mobile-menu button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 14px 24px;
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    border-bottom: 1px solid var(--border);
+    transition: all 0.2s;
+  }
+  .mobile-menu button:hover,
+  .mobile-menu button.active { color: var(--pink); padding-left: 32px; }
+  .mobile-menu button:last-child { border-bottom: none; }
+
 </style>
 </head>
 <body>
@@ -301,6 +361,10 @@
     <li><button onclick="showPage('forms')" id="nav-forms">Forms</button></li>
     <li><button onclick="showPage('contact')" id="nav-contact">Contact</button></li>
   </ul>
+  <button class="hamburger" id="hamburgerBtn" onclick="toggleMobileMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+    <span style="font-size:0.5rem;letter-spacing:0.15em;color:var(--pink);font-family:Montserrat,sans-serif;font-weight:500;width:100%;text-align:center;height:auto;background:none;margin-top:2px;">MENU</span>
+  </button>
   <div class="nav-right">
     <div class="nav-social">
       <a href="https://www.instagram.com/brits_beauty_spa/" target="_blank" title="Instagram"><svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
@@ -317,6 +381,18 @@
   <div class="women-banner-dot"></div>
   <span class="women-banner-text">✨ StyleSeat Top Pro · 18+ Years of Excellence</span>
   <div class="women-banner-dot"></div>
+</div>
+
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button onclick="showPageMobile('home')" id="mnav-home" class="active">🏠 Home</button>
+  <button onclick="showPageMobile('about')" id="mnav-about">👩 About</button>
+  <button onclick="showPageMobile('services')" id="mnav-services">💆 Services</button>
+  <button onclick="showPageMobile('gallery')" id="mnav-gallery">📸 Gallery</button>
+  <button onclick="showPageMobile('reviews')" id="mnav-reviews">⭐ Reviews</button>
+  <button onclick="showPageMobile('forms')" id="mnav-forms">📋 Forms</button>
+  <button onclick="showPageMobile('contact')" id="mnav-contact">📍 Contact</button>
 </div>
 
 <!-- PAGE WRAPPER -->
@@ -842,6 +918,22 @@
 </button>
 
 <script>
+
+// MOBILE MENU
+function toggleMobileMenu() {
+  var menu = document.getElementById('mobileMenu');
+  menu.classList.toggle('open');
+}
+
+function showPageMobile(name) {
+  showPage(name);
+  document.getElementById('mobileMenu').classList.remove('open');
+  // Update mobile nav active state
+  document.querySelectorAll('#mobileMenu button').forEach(b => b.classList.remove('active'));
+  var mb = document.getElementById('mnav-' + name);
+  if(mb) mb.classList.add('active');
+}
+
 // PAGE NAVIGATION
 function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
